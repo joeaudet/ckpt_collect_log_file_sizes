@@ -21,7 +21,7 @@ clish -c 'lock database override' > /dev/null
 #Define misc variables
 MDS=false;
 DAYS_BACK=7;
-TODAY=$(date +"%Y-%m-%d");
+TODAY=$(date +"%Y-%m-%d_%H%M");
 OUTPUT_DIR="/home/admin";
 OUTPUT_FILE_NAME="$OUTPUT_DIR/$HOSTNAME-log_sizing_output-$TODAY.csv";
 
