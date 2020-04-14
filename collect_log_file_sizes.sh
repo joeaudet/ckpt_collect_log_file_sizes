@@ -23,7 +23,7 @@ MDS=false;
 DAYS_BACK=7;
 TODAY=$(date +"%Y-%m-%d");
 OUTPUT_DIR="/home/admin";
-OUTPUT_FILE_NAME="$OUTPUT_DIR/$HOSTNAME-log_sizing_output-$TODAY.txt";
+OUTPUT_FILE_NAME="$OUTPUT_DIR/$HOSTNAME-log_sizing_output-$TODAY.csv";
 
 #Define a function to generate the output of file sizes we want
 collect_log_file_data()
@@ -50,6 +50,7 @@ else
     for CMA_NAME in $($MDSVERUTIL AllCMAs)
     do
         echo "Currently processing domain: $CMA_NAME";
+		#Switch to domain environment
         mdsenv $CMA_NAME
         #Go back specified amount of days and collect log data
         for (( x=DAYS_BACK; x>=1; --x ))
