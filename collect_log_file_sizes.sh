@@ -33,7 +33,7 @@ collect_log_file_data()
     LOG_FILE_CUSTOMER="";
     LOG_FILE_SIZE="$(ls -l $FWDIR/log/$(date --date="-$x days" +"%Y-%m-%d")*.log | awk '{print $5}')";
     LOG_FILE_NAME="$(ls -l $FWDIR/log/$(date --date="-$x days" +"%Y-%m-%d")*.log | awk '{print $9}')";
-    if ($MDS)
+    if [ "$MDS" = true ]
     then
 	    LOG_FILE_CUSTOMER="$(dirname $LOG_FILE_NAME | cut -d '/' -f5)";
         echo "$LOG_FILE_SIZE,$LOG_FILE_CUSTOMER,$(basename $LOG_FILE_NAME)" >> $OUTPUT_FILE_NAME;
