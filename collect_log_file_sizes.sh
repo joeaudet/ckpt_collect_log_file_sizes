@@ -34,11 +34,12 @@ collect_log_file_data()
     LOG_FILE_NAME="$(ls -l $FWDIR/log/$(date --date="-$x days" +"%Y-%m-%d")*.log | awk '{print $9}')";
     if [ -z ${MDSVERUTIL+x} ];
     then
-	    LOG_FILE_CUSTOMER="$(dirname $LOG_FILE_NAME | cut -d '/' -f5)";
-        echo "$LOG_FILE_SIZE,$LOG_FILE_CUSTOMER,$(basename $LOG_FILE_NAME)" >> $OUTPUT_FILE_NAME;
-	else
         echo "$LOG_FILE_SIZE,$(basename $LOG_FILE_NAME)" >> $OUTPUT_FILE_NAME;
-	fi
+    else
+        LOG_FILE_CUSTOMER="$(dirname $LOG_FILE_NAME | cut -d '/' -f5)";
+        echo "$LOG_FILE_SIZE,$LOG_FILE_CUSTOMER,$(basename $LOG_FILE_NAME)" >> $OUTPUT_FILE_NAME;
+
+    fi
 }
 
 # Process differently for an SMS versus an MDS server
@@ -46,13 +47,13 @@ if [ -z ${MDSVERUTIL+x} ];
 then
     #Go back specified amount of days and collect log data
     echo "File_Size,File_Name" >> $OUTPUT_FILE_NAME;
-	for (( x=DAYS_BACK; x>=1; --x ))
+    for (( x=DAYS_BACK; x>=1; --x ))
     do
         collect_log_file_data
     done
 else
     #Loop through each MDS domain on the server
-	echo "File_Size,Domain,File_Name" >> $OUTPUT_FILE_NAME
+    echo "File_Size,Domain,File_Name" >> $OUTPUT_FILE_NAME
     for CMA_NAME in $($MDSVERUTIL AllCMAs)
     do
         echo "Currently processing domain: $CMA_NAME";
