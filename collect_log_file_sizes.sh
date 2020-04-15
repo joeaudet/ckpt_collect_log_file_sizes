@@ -46,10 +46,16 @@ collect_log_file_data()
         else
             LOG_FILE_CUSTOMER="$(dirname $LOG_FILE_NAME | cut -d '/' -f5)";
             echo "$LOG_FILE_SIZE,$LOG_FILE_CUSTOMER,$(basename $LOG_FILE_NAME)" >> $OUTPUT_FILE_NAME;
-
         fi
     else
-        echo "$LOG_FILE_DATE*.log entries to not exist" >> $OUTPUT_FILE_NAME;
+        # Process differently for an SMS versus an MDS server
+        if [ -z ${MDSVERUTIL+x} ];
+        then
+            echo "$LOG_FILE_DATE*.log entries do not exist in $FWDIR/log" >> $OUTPUT_FILE_NAME;
+        else
+            LOG_FILE_CUSTOMER="$(dirname $LOG_FILE_NAME | cut -d '/' -f5)";
+			echo "Domain: $LOG_FILE_CUSTOMER $LOG_FILE_DATE*.log entries do not exist in $FWDIR/log" >> $OUTPUT_FILE_NAME;
+        fi
     fi
 }
 
