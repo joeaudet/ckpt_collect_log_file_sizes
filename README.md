@@ -1,7 +1,7 @@
 # ckpt_collect_log_file_sizes
 Used to collect log file sizes from a Check Point log server
 
-## Instructions
+## Instructions 
 
 ### Script setup
 1. ssh into a Check Point log server as admin
