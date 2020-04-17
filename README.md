@@ -18,3 +18,4 @@ Used to collect log file sizes from a Check Point log server
    ```
    /home/admin/./collect_log_file_sizes.sh
    ```
+1. Take the output CSV file and open it up with a spreadsheet program for analysis

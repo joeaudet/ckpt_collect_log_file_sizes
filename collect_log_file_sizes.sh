@@ -1,13 +1,14 @@
 #!/bin/bash
 
-#Used to collect log file names and sizes from a Check Point management server
-#to determine logging rate from a previous period of days from the day the script was run
-#Script assumes you have regular log file rotation, and is looking for a specific name format: YEAR-MON-DAY*.log
+# Used to collect log file names and sizes from a Check Point management server
+# to determine logging rate from a previous period of days from the day the script was run
+# Script assumes you have regular log file rotation, and is looking for a specific name format: YEAR-MON-DAY*.log
+# Output format will be a CSV file which is intended to be opened with a spreadsheet program for analysis
 #
-#Author: Joe Audet
+# Author: Joe Audet
 #
-#v1 - 2020APR14
-#v2 - 2020APR15
+# v1 - 2020APR14
+# v2 - 2020APR15
 
 # get CP environment
 . /etc/profile.d/CP.sh
