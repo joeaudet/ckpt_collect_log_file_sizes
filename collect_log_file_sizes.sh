@@ -3,7 +3,7 @@
 # Used to collect log file names and sizes from a Check Point management server
 # to determine logging rate from a previous period of days from the day the script was run
 # Script assumes you have regular log file rotation, and is looking for a specific name format: YEAR-MON-DAY*.log
-# Output format will be a CSV file which is intended to be opened with a spreadsheet program for analysis 
+# Output format will be a CSV file which is intended to be opened with a spreadsheet program for analysis
 #
 # Author: Joe Audet
 #
@@ -33,13 +33,14 @@ collect_log_file_data()
     LOG_FILE_NAME="";
     LOG_FILE_CUSTOMER="";
     LOG_FILE_DATE=$(date --date="-$x days" +"%Y-%m-%d");
-    
+
     #Check if file pattern match exists, if not put an error message in the log instead of empty commas
     if [ -e "$FWDIR/log/$LOG_FILE_DATE*.log" ];
+    echo "Collecting info about: $FWDIR/log/$LOG_FILE_DATE*.log";
     then
         LOG_FILE_SIZE="$(ls -l $FWDIR/log/$LOG_FILE_DATE*.log | awk '{print $5}')";
         LOG_FILE_NAME="$(ls -l $FWDIR/log/$LOG_FILE_DATE*.log | awk '{print $9}')";
-        
+
         # Process differently for an SMS versus an MDS server
         if [ -z ${MDSVERUTIL+x} ];
         then
@@ -49,13 +50,14 @@ collect_log_file_data()
             echo "$LOG_FILE_SIZE,$LOG_FILE_CUSTOMER,$(basename $LOG_FILE_NAME)" >> $OUTPUT_FILE_NAME;
         fi
     else
+        echo "$FWDIR/log/$LOG_FILE_DATE*.log does NOT exist";
         # Process differently for an SMS versus an MDS server
         if [ -z ${MDSVERUTIL+x} ];
         then
             echo "$LOG_FILE_DATE*.log entries do not exist in $FWDIR/log" >> $OUTPUT_FILE_NAME;
         else
             LOG_FILE_CUSTOMER="$(dirname $LOG_FILE_NAME | cut -d '/' -f5)";
-			echo "Domain: $LOG_FILE_CUSTOMER $LOG_FILE_DATE*.log entries do not exist in $FWDIR/log" >> $OUTPUT_FILE_NAME;
+            echo "Domain: $LOG_FILE_CUSTOMER $LOG_FILE_DATE*.log entries do not exist in $FWDIR/log" >> $OUTPUT_FILE_NAME;
         fi
     fi
 }
